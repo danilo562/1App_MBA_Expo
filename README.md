@@ -1,5 +1,5 @@
 # 1App_MBA_Expo
-Primeiro App do MBA Full Stack
+Primeiro App do MBA Full Stack utilizando Expo com token, AsyncStorage e mais tecnologia para subir.
 
 
 # Clonando
