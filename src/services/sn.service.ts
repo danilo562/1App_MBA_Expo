@@ -18,6 +18,18 @@ class SocialNetworkService {
         }
     }
 
+    public async getPosts(token: string){
+        try {
+            //Bearer
+            const response = await this.api.get('/posts',
+             {headers:{ Authorization: `Bearer ${token}` } });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
     public async create(user: User) {
         try {
             const response = await this.api.post('/users', user);

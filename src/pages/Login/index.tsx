@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
 import { Button, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
+import storage from '../../repositories/storage';
 import MyTextInput from '../../components/MyTextInput';
 import { snService } from '../../services/sn.service';
 import { TypeRoutes } from '../../routes';
@@ -25,7 +26,7 @@ export default function Login() {
                 />
             )
         });
-        
+
     }, []);
 
     function goNewUser() {
@@ -35,6 +36,7 @@ export default function Login() {
     async function login() {
         const token = await snService.login(email, password);
         if (token) {
+            await storage.save(token);
             navigation.navigate('Home');
         } else {
             alert('Login inválido!');

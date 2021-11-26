@@ -41,6 +41,8 @@ export default function SignUp() {
         try {
             if (savedUser && savedUser.id) {
                 navigation.goBack();
+            } else {
+                alert('Usuário já existente!');
             }
         } catch (error) {
             console.error('Erro ao criar um novo usuário: ', error);
@@ -60,7 +62,6 @@ export default function SignUp() {
             <MyTextInput title="Confirmar senha:" value={confirmar} onChangeText={setConfirmar} secureTextEntry />
 
             <Button title="Cadastrar" onPress={save} />
-
         </View>
     );
 }
