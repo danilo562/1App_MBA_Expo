@@ -16,20 +16,11 @@ export default function Home() {
     const navigation = useNavigation<NavigationProp<TypeRoutes>>();
 
     const [posts, setPosts] = React.useState<Post[]>();
+    const [ refreshing, setRefreshing ] = React.useState(false);
 
     React.useEffect(() => {
 
-        storage.get().then(token => {
-            if (token) {
-                snService.getPosts(token).then(posts => {
-                    if (posts) setPosts(posts);
-                    else alert('Ocorreu um erro ao recuperar as postagens!');
-                });
-            } else {
-                alert('Sessão expirada!');
-                navigation.goBack();
-            }
-        });
+        fetchPosts();
 
         navigation.setOptions({
             headerRight: () => (
@@ -40,6 +31,25 @@ export default function Home() {
         });
 
     }, []);
+
+    function fetchPosts() {
+        setRefreshing(true);
+
+        storage.get().then(userInfo => {
+            const token = userInfo.token as string;
+            if (token) {
+                snService.getPosts(token).then(posts => {
+                    setRefreshing(false);
+                    if (posts) setPosts(posts);
+                    else alert('Ocorreu um erro ao recuperar as postagens!');
+                });
+            } else {
+                setRefreshing(false);
+                alert('Sessão expirada!');
+                navigation.goBack();
+            }
+        });
+    }
 
     function createPost() {
         navigation.navigate('Post');
@@ -53,6 +63,8 @@ export default function Home() {
             
             <FlatList
                 data={posts}
+                onRefresh={fetchPosts}
+                refreshing={refreshing}
                 renderItem={({ item }) => <PostItem post={item} />}
                 keyExtractor={item => item.id ? item.id.toString() : ''}
             />

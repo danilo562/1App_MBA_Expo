@@ -18,13 +18,9 @@ export default function PostPage() {
     const navigation = useNavigation<NavigationProp<TypeRoutes>>();
 
     React.useEffect(() => {
-        storage.get().then(token => {
-            if (token) {
-                setToken(token);
-                snService.getUser(token).then(user => {
-                    if (user) setOwner(user);
-                });
-            }
+        storage.get().then(({ token, user }) => {
+            if (token) setToken(token);
+            if (user) setOwner(user);
         });
     }, [token]);
 

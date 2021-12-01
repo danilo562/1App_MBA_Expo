@@ -5,11 +5,13 @@ class Storage {
     private readonly KEY = "SN_TOKEN";
 
     public async get() {
-        return await AsyncStorage.getItem(this.KEY);
-    }
+        const json = await AsyncStorage.getItem(this.KEY);
+        return json ? JSON.parse(json) :null;
+     }
 
-    public async save(token: string) {
-        await AsyncStorage.setItem(this.KEY, token);
+    public async save(userInfo: any) {
+        const json = JSON.stringify(userInfo);
+        await AsyncStorage.setItem(this.KEY, json);
     }
 
 }

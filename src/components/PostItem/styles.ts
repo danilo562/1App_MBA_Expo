@@ -3,15 +3,22 @@ import { Dimensions, StyleSheet } from 'react-native';
 export default StyleSheet.create({
 
     container: {
-        marginTop: 20,
-        width: Dimensions.get('window').width - 40,
+        padding:10,
+        margin:10,
+        borderWidth:1,
+        borderRadius:3,
+        borderColor:'gray',
+        
+        width: Dimensions.get('window').width - 20
     },
 
     text: {
-        fontSize: 22
+        fontSize: 20,
+        textAlign: 'justify'
     },
 
     owner: {
+        color: 'gray',
         textAlign: 'right'
     }
 

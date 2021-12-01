@@ -36,7 +36,8 @@ export default function Login() {
     async function login() {
         const token = await snService.login(email, password);
         if (token) {
-            await storage.save(token);
+            const user = await snService.getUser(token);
+            await storage.save({ token, user });
             navigation.navigate('Home');
         } else {
             alert('Login inválido!');
