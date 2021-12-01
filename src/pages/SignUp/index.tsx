@@ -37,7 +37,7 @@ export default function SignUp() {
             name, password
         };
         
-        const savedUser = await snService.create(user);
+        const savedUser = await snService.createUser(user);
         try {
             if (savedUser && savedUser.id) {
                 navigation.goBack();

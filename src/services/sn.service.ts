@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { User } from '../entities';
+import { Post, User } from '../entities';
 
 class SocialNetworkService {
 
@@ -18,11 +18,10 @@ class SocialNetworkService {
         }
     }
 
-    public async getPosts(token: string){
+    public async getUser(token: string) {
         try {
-            //Bearer
-            const response = await this.api.get('/posts',
-             {headers:{ Authorization: `Bearer ${token}` } });
+            const config = this.createConfig(token);
+            const response = await this.api.get<User>('/users', config);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -30,14 +29,51 @@ class SocialNetworkService {
         }
     }
 
-    public async create(user: User) {
+    public async createUser(user: User) {
         try {
-            const response = await this.api.post('/users', user);
+            const response = await this.api.post<User>('/users', user);
             return response.data;
         } catch (error) {
             console.error(error);
             return null;
         }
+    }
+
+    public async getPosts(token: string) {
+        try {
+            const config = this.createConfig(token);
+            const response = await this.api.get<Post[]>('/posts', config);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
+    public async createPost(token: string, body: Post) {
+        try {
+            const config = this.createConfig(token);
+            const response = await this.api.post<Post>('/posts', body, config);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
+    public async updatePost(token: string, body: Post) {
+        try {
+            const config = this.createConfig(token);
+            const response = await this.api.put<Post>(`/posts/${body.id}`, body, config);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
+    private createConfig(token: string) {
+        return { headers: { Authorization: `Bearer ${token}` } };
     }
 
 }
