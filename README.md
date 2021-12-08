@@ -7,4 +7,4 @@ Para estudo de criaçao de app com chave JWT Localização Rotação.
 - Requisição HTTP (Axios)
 - Armazenamento (AsyncStorage)
 
-React (props, state)
+- React (props, state)
