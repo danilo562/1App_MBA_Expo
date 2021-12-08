@@ -18,7 +18,10 @@ export default function PostItem({ post }: Props) {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{post.description}</Text>
-            { !isOwner && (<Text style={styles.owner}>{post.owner.name}</Text>) }
+            <View style={styles.info}>
+                <Text style={styles.city}>{post.location}</Text>
+                { !isOwner && (<Text style={styles.owner}>{post.owner.name}</Text>) }
+            </View>
         </View>
     );
 }

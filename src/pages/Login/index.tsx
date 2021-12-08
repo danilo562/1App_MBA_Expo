@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import storage from '../../repositories/storage';
@@ -16,9 +17,9 @@ export default function Login() {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [marginLeft, setMarginLeft] = React.useState(20);
 
     React.useEffect(() => {
-
         navigation.setOptions({
             headerRight: () => (
                 <Ionicons
@@ -27,6 +28,7 @@ export default function Login() {
             )
         });
 
+        ScreenOrientation.addOrientationChangeListener(changeOrientation);
     }, []);
 
     function goNewUser() {
@@ -44,8 +46,16 @@ export default function Login() {
         }
     }
 
+    function changeOrientation(event: ScreenOrientation.OrientationChangeEvent) {
+        if (event.orientationInfo.orientation === 4) {
+            setMarginLeft(40);
+        } else {
+            setMarginLeft(20);
+        }
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, marginLeft }}>
             <MyTextInput title="E-mail:" value={email} onChangeText={setEmail} />
             
             <MyTextInput
